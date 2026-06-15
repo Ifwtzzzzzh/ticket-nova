@@ -1,0 +1,188 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #0f172a;
+  color: #ffffff;
+  transition: 0.3s;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+  background: #020617 !important;
+  padding: 15px 0;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* =========================
+   HERO SECTION
+========================= */
+
+.hero {
+  background: linear-gradient(
+    135deg,
+    rgba(30, 27, 75, 0.9),
+    rgba(15, 23, 42, 0.95)
+  ),
+  url("https://images.unsplash.com/photo-1501386761578-eac5c94b800a");
+
+  background-size: cover;
+  background-position: center;
+
+  padding: 140px 20px;
+  text-align: center;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.btn-pink {
+  background: #ff2d95;
+  color: white;
+  border: none;
+  transition: 0.3s;
+}
+
+.btn-pink:hover {
+  background: #e11d74;
+  transform: scale(1.05);
+}
+
+.btn-primary {
+  background: #6366f1;
+  border: none;
+}
+
+.btn-primary:hover {
+  background: #4f46e5;
+}
+
+.btn-success {
+  background: #22c55e;
+  border: none;
+}
+
+.btn-success:hover {
+  background: #16a34a;
+}
+
+.btn-warning {
+  background: #f59e0b;
+  border: none;
+  color: black;
+}
+
+/* =========================
+   CARD DESIGN
+========================= */
+
+.card {
+  background: #1e293b;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  transition: 0.3s;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* =========================
+   INPUT FORM
+========================= */
+
+.form-control,
+.form-select {
+  background: #0f172a;
+  border: 1px solid #334155;
+  color: white;
+}
+
+.form-control:focus {
+  background: #0f172a;
+  color: white;
+  border-color: #6366f1;
+  box-shadow: none;
+}
+
+/* =========================
+   TEXT UTILITY
+========================= */
+
+.text-muted {
+  color: #94a3b8 !important;
+}
+
+/* =========================
+   COUNTDOWN
+========================= */
+
+.countdown {
+  color: #fbbf24;
+  font-weight: bold;
+}
+
+/* =========================
+   BADGE STYLE
+========================= */
+
+.badge {
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+  background: #020617;
+  padding: 30px 0;
+  text-align: center;
+  margin-top: 50px;
+}
+
+/* =========================
+   HOVER EFFECT GLOBAL
+========================= */
+
+button,
+a {
+  transition: 0.2s;
+}
+
+button:hover,
+a:hover {
+  opacity: 0.9;
+}
+
+/* =========================
+   SCROLLBAR (optional aesthetic)
+========================= */
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6366f1;
+}

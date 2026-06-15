@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>TicketNova - Online Ticket Booking</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        background: #0f172a;
+        color: white;
+      }
+
+      .navbar {
+        background: #020617;
+      }
+
+      .hero {
+        min-height: 80vh;
+
+        background:
+          linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+          url("https://images.unsplash.com/photo-1501386761578-eac5c94b800a");
+
+        background-size: cover;
+        background-position: center;
+
+        display: flex;
+        align-items: center;
+      }
+
+      .card {
+        background: #1e293b;
+        color: white;
+        border: none;
+        transition: 0.3s;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+      }
+
+      footer {
+        background: #020617;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container">
+        <a class="navbar-brand fw-bold"> 🎫 TicketNova </a>
+        <div class="ms-auto">
+          <a href="index.html" class="btn btn-outline-light btn-sm"> Home </a>
+          <a href="events.html" class="btn btn-outline-light btn-sm">
+            Events
+          </a>
+          <a href="dashboard.html" class="btn btn-outline-light btn-sm">
+            My Tickets
+          </a>
+          <a href="login.html" class="btn btn-success btn-sm"> Login </a>
+          <a href="admin.html" class="btn btn-warning btn-sm"> Admin </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container text-center">
+        <h1 class="display-3 fw-bold">
+          Temukan dan Pesan Tiket Konser Favoritmu
+        </h1>
+        <p class="lead">
+          Nikmati pengalaman konser terbaik dengan pemesanan tiket yang cepat,
+          aman dan mudah.
+        </p>
+        <a href="events.html" class="btn btn-primary btn-lg me-2">
+          🎟 Beli Tiket
+        </a>
+        <a href="events.html" class="btn btn-outline-light btn-lg">
+          🎤 Jelajahi Event
+        </a>
+      </div>
+    </section>
+
+    <!-- QUICK ACCESS -->
+    <div class="container py-5">
+      <h2 class="text-center mb-4">⚡ Quick Access</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card p-4 text-center">
+            <h4>🎤 Browse Events</h4>
+            <p>Lihat semua event dan konser terbaru</p>
+            <a href="events.html" class="btn btn-primary"> Open </a>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card p-4 text-center">
+            <h4>🎟 My Tickets</h4>
+            <p>Lihat tiket yang sudah dibeli</p>
+            <a href="dashboard.html" class="btn btn-success"> Open </a>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card p-4 text-center">
+            <h4>🔥 Trending Event</h4>
+
+            <p>Event paling populer saat ini</p>
+
+            <a href="events.html" class="btn btn-warning"> View </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATISTICS -->
+    <div class="container py-5">
+      <div class="row text-center">
+        <div class="col-md-4">
+          <h2>50+</h2>
+          <p>Events</p>
+        </div>
+
+        <div class="col-md-4">
+          <h2>1000+</h2>
+
+          <p>Users</p>
+        </div>
+
+        <div class="col-md-4">
+          <h2>500+</h2>
+
+          <p>Tickets Sold</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FEATURED -->
+
+    <div class="container py-5">
+      <h2 class="mb-4">🔥 Featured Concert</h2>
+
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card">
+            <img
+              src="https://picsum.photos/400/250?random=1"
+              class="card-img-top"
+            />
+
+            <div class="card-body">
+              <h5>Coldplay Live</h5>
+
+              <p>📍 Jakarta</p>
+
+              <p>💰 Mulai Rp 500.000</p>
+
+              <a href="events.html" class="btn btn-primary"> Book Now </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card">
+            <img
+              src="https://picsum.photos/400/250?random=2"
+              class="card-img-top"
+            />
+
+            <div class="card-body">
+              <h5>Bruno Mars Tour</h5>
+
+              <p>📍 Bali</p>
+
+              <p>💰 Mulai Rp 650.000</p>
+
+              <a href="events.html" class="btn btn-primary"> Book Now </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card">
+            <img
+              src="https://picsum.photos/400/250?random=3"
+              class="card-img-top"
+            />
+
+            <div class="card-body">
+              <h5>Music Festival 2026</h5>
+
+              <p>📍 Bandung</p>
+
+              <p>💰 Mulai Rp 400.000</p>
+
+              <a href="events.html" class="btn btn-primary"> Book Now </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TESTIMONI -->
+
+    <div class="container py-5">
+      <h2 class="mb-4">⭐ Testimoni Pengguna</h2>
+
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card p-3">
+            <h5>Andi</h5>
+
+            <p>Sangat mudah digunakan dan proses booking sangat cepat.</p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card p-3">
+            <h5>Salsa</h5>
+
+            <p>Tiket langsung masuk dashboard setelah pembayaran.</p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card p-3">
+            <h5>Rizky</h5>
+
+            <p>Desain website modern dan mudah dipahami.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+
+    <footer class="py-4">
+      <div class="container text-center">
+        <p>© 2026 TicketNova</p>
+
+        <p>Tentang Kami | FAQ | Kontak | Privacy Policy</p>
+      </div>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
