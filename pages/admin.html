@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Admin Dashboard - TicketNova</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        background: #0f172a;
+        color: white;
+        min-height: 100vh;
+      }
+
+      .navbar {
+        background: #020617;
+      }
+
+      .card {
+        background: #1e293b;
+        border: none;
+        color: white;
+      }
+
+      .table {
+        border-radius: 10px;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container">
+        <a class="navbar-brand fw-bold"> 🎫 TicketNova Admin </a>
+        <div class="ms-auto">
+          <a href="../index.html" class="btn btn-outline-light btn-sm">
+            Home
+          </a>
+          <a href="../pages/events.html" class="btn btn-outline-light btn-sm">
+            Events
+          </a>
+          <a
+            href="../pages/dashboard.html"
+            class="btn btn-outline-light btn-sm"
+          >
+            Dashboard
+          </a>
+        </div>
+      </div>
+    </nav>
+    <div class="container py-5">
+      <h1 class="mb-4">📊 Admin Dashboard</h1>
+
+      <!-- STATISTIC -->
+      <div class="row g-3">
+        <div class="col-md-4">
+          <div class="card p-3">
+            <h3 id="totalEvent">0</h3>
+            <p>Total Event</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card p-3">
+            <h3 id="totalTicket">0</h3>
+            <p>Total Tiket Terjual</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card p-3">
+            <h3 id="totalUser">0</h3>
+            <p>Total User</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- REWARD -->
+      <div class="row mt-4">
+        <div class="col-md-6">
+          <div class="alert alert-success">
+            🏆 Reward Points :
+            <span id="rewardPoint">0</span>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="alert alert-info">
+            🎖 Badge :
+            <span id="badge">Bronze Fan</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROGRESS -->
+      <div class="card p-3 mt-4">
+        <h4>📈 Statistik Penjualan</h4>
+        <div class="progress">
+          <div
+            class="progress-bar bg-success"
+            role="progressbar"
+            style="width: 0%"
+          >
+            0%
+          </div>
+        </div>
+      </div>
+      <hr class="my-5" />
+
+      <!-- FORM EVENT -->
+      <h3>➕ Tambah Event</h3>
+      <input
+        type="text"
+        id="eventName"
+        class="form-control mb-2"
+        placeholder="Nama Event"
+      />
+      <select id="eventLocation" class="form-control mb-2" required>
+        <option value="" selected disabled>Pilih Lokasi</option>
+        <option value="Jakarta">Jakarta</option>
+        <option value="Bandung">Bandung</option>
+        <option value="Bali">Bali</option>
+      </select>
+      <input type="date" id="eventDate" class="form-control mb-2" />
+      <div class="d-flex gap-2">
+        <button class="btn btn-success" id="addEvent">Tambah Event</button>
+        <button class="btn btn-warning" id="toggleTheme">🌙 Mode</button>
+      </div>
+      <hr class="my-5" />
+
+      <!-- LIST EVENT -->
+      <h3>🎤 Daftar Event</h3>
+      <div class="table-responsive">
+        <table class="table table-dark table-hover">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama Event</th>
+              <th>Lokasi</th>
+              <th>Tanggal</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="eventList"></tbody>
+        </table>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+      // Variabel global untuk menandai indeks event yang sedang diedit (null artinya mode tambah baru)
+      let editIndex = null;
+
+      // Fungsi Toggle Theme bawaan lu
+      $("#toggleTheme").click(function () {
+        $("body").toggleClass("bg-light text-dark");
+        $(".card").toggleClass("bg-white text-dark");
+      });
+
+      // Fungsi Update Badge
+      function updateBadge() {
+        let point = parseInt(localStorage.getItem("points")) || 0;
+        $("#rewardPoint").text(point);
+        let badge = "Bronze Fan";
+        if (point >= 500) badge = "Silver Fan";
+        if (point >= 1000) badge = "Gold Fan";
+        if (point >= 2000) badge = "Platinum Fan";
+        $("#badge").text(badge);
+      }
+
+      function loadDashboard() {
+        let events = JSON.parse(localStorage.getItem("events")) || [];
+        let tickets = JSON.parse(localStorage.getItem("tickets")) || [];
+        let user = JSON.parse(localStorage.getItem("user"));
+        $("#totalEvent").text(events.length);
+        $("#totalTicket").text(tickets.length);
+        $("#totalUser").text(user ? 1 : 0);
+        $("#eventList").html("");
+        events.forEach((e, index) => {
+          $("#eventList").append(`
+        <tr>
+          <td>${index + 1}</td>
+          <td>${e.name}</td>
+          <td><span class="badge bg-info text-dark">${e.location}</span></td>
+          <td>${e.date}</td>
+          <td>
+            <button class="btn btn-warning btn-sm fw-semibold me-1" onclick="editEvent(${index})">
+              <i class="fa-solid fa-pen-to-square"></i> Edit
+            </button>
+            <button class="btn btn-danger btn-sm fw-semibold" onclick="deleteEvent(${index})">
+              <i class="fa-solid fa-trash"></i> Hapus
+            </button>
+          </td>
+        </tr>
+      `);
+        });
+
+        let progress = events.length * 10;
+        if (progress > 100) progress = 100;
+        $(".progress-bar")
+          .css("width", progress + "%")
+          .text(progress + "%");
+        updateBadge();
+      }
+
+      $("#addEvent").click(function () {
+        let eventName = $("#eventName").val();
+        let eventLocation = $("#eventLocation").val();
+        let eventDate = $("#eventDate").val();
+        if (
+          eventName === "" ||
+          eventLocation === null ||
+          eventLocation === "" ||
+          eventDate === ""
+        ) {
+          alert("⚠️ Lengkapi semua data termasuk lokasi event, brother!");
+          return;
+        }
+
+        let events = JSON.parse(localStorage.getItem("events")) || [];
+        let eventData = {
+          name: eventName,
+          location: eventLocation,
+          date: eventDate,
+        };
+
+        if (editIndex === null) {
+          events.push(eventData);
+          alert("✅ Event baru berhasil ditambahkan!");
+        } else {
+          events[editIndex] = eventData;
+          alert("📝 Perubahan event berhasil disimpan!");
+          $("#addEvent")
+            .text("Tambah Event")
+            .removeClass("btn-info")
+            .addClass("btn-primary");
+          editIndex = null; // Reset kembali status edit
+        }
+
+        localStorage.setItem("events", JSON.stringify(events));
+        $("#eventName").val("");
+        $("#eventLocation").val("");
+        $("#eventDate").val("");
+        loadDashboard();
+      });
+
+      function deleteEvent(index) {
+        if (confirm("Kamu yakin ingin menghapus event ini, brother?")) {
+          let events = JSON.parse(localStorage.getItem("events")) || [];
+          events.splice(index, 1);
+          localStorage.setItem("events", JSON.stringify(events));
+          if (editIndex === index) {
+            $("#addEvent")
+              .text("Tambah Event")
+              .removeClass("btn-info")
+              .addClass("btn-primary");
+            $("#eventName").val("");
+            $("#eventLocation").val("");
+            $("#eventDate").val("");
+            editIndex = null;
+          }
+          loadDashboard();
+        }
+      }
+
+      function editEvent(index) {
+        let events = JSON.parse(localStorage.getItem("events")) || [];
+        $("#eventName").val(events[index].name);
+        $("#eventLocation").val(events[index].location);
+        $("#eventDate").val(events[index].date);
+        editIndex = index;
+        $("#addEvent")
+          .text("Simpan Perubahan")
+          .removeClass("btn-primary")
+          .addClass("btn-info text-dark fw-bold");
+        $("html, body").animate(
+          { scrollTop: $("#eventName").offset().top - 100 },
+          300,
+        );
+      }
+      $(document).ready(function () {
+        loadDashboard();
+      });
+    </script>
+  </body>
+</html>

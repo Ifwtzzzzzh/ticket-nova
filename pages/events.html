@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Events - TicketNova</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        background: #0f172a;
+        color: white;
+      }
+
+      .navbar {
+        background: #020617;
+      }
+
+      .card {
+        background: #1e293b;
+        color: white;
+        border: none;
+        transition: 0.3s;
+      }
+
+      .card:hover {
+        transform: translateY(-5px);
+      }
+
+      .countdown {
+        color: #fbbf24;
+        font-weight: bold;
+      }
+
+      #search::placeholder {
+        color: white !important;
+        opacity: 0.8;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="../index.html"> 🎫 TicketNova </a>
+        <div class="ms-auto">
+          <a href="../index.html" class="btn btn-outline-light btn-sm">
+            Home
+          </a>
+          <a href="dashboard.html" class="btn btn-outline-light btn-sm">
+            Dashboard
+          </a>
+          <a href="wishlist.html" class="btn btn-outline-light btn-sm">
+            Wishlist
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="modal fade" id="bookingModal">
+      <div class="modal-dialog">
+        <div class="modal-content bg-dark text-white border-secondary">
+          <div class="modal-header border-secondary">
+            <h5 class="modal-title">Booking Tiket</h5>
+            <button
+              class="btn-close btn-close-white"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <input type="hidden" id="eventName" />
+            <label class="form-label">Jenis Tiket</label>
+            <select
+              class="form-control mb-3 bg-secondary text-white border-0"
+              id="ticketType"
+            >
+              <option>VIP</option>
+              <option>Festival</option>
+              <option>Regular</option>
+            </select>
+            <label class="form-label">Jumlah Tiket</label>
+            <input
+              type="number"
+              class="form-control bg-secondary text-white border-0"
+              id="ticketQty"
+              value="1"
+              min="1"
+            />
+          </div>
+          <div class="modal-footer border-secondary">
+            <button class="btn btn-success px-4" id="confirmBook">
+              Konfirmasi Booking
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container py-5">
+      <h2 class="mb-4">🎤 All Events</h2>
+
+      <div class="row mb-4">
+        <div class="col-md-8 mb-2 mb-md-0">
+          <input
+            type="text"
+            id="search"
+            class="form-control bg-secondary bg-opacity-10 text-white border-secondary"
+            placeholder="Cari Events..."
+          />
+        </div>
+        <div class="col-md-4">
+          <select
+            class="form-select bg-secondary bg-opacity-10 text-white border-secondary"
+            id="filterLocation"
+          >
+            <option value="" class="bg-dark">Semua Lokasi</option>
+            <option value="Jakarta" class="bg-dark">Jakarta</option>
+            <option value="Bandung" class="bg-dark">Bandung</option>
+            <option value="Bali" class="bg-dark">Bali</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row" id="masterEventGrid">
+        <div class="col-md-4 mb-4 event-card" data-location="Jakarta">
+          <div class="card p-3 h-100">
+            <img
+              src="https://picsum.photos/400/250?random=1"
+              class="img-fluid rounded mb-3"
+            />
+            <div
+              class="card-body p-0 d-flex flex-column justify-content-between"
+            >
+              <div>
+                <h5 class="fw-bold">Coldplay Live</h5>
+                <p class="mb-1">📍 Jakarta</p>
+                <p class="text-success fw-semibold">💰 Mulai Rp 500.000</p>
+                <p class="mb-3">
+                  ⏳ <span class="countdown" data-date="2026-11-15"></span>
+                </p>
+              </div>
+              <div class="d-flex gap-2">
+                <button class="btn btn-outline-danger btn-sm w-50 wishlistBtn">
+                  ❤️ Wishlist
+                </button>
+                <button class="btn btn-primary btn-sm w-50 bookBtn">
+                  🎟 Book
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 mb-4 event-card" data-location="Bali">
+          <div class="card p-3 h-100">
+            <img
+              src="https://picsum.photos/400/250?random=2"
+              class="img-fluid rounded mb-3"
+            />
+            <div
+              class="card-body p-0 d-flex flex-column justify-content-between"
+            >
+              <div>
+                <h5 class="fw-bold">Bruno Mars Tour</h5>
+                <p class="mb-1">📍 Bali</p>
+                <p class="text-success fw-semibold">💰 Mulai Rp 650.000</p>
+                <p class="mb-3">
+                  ⏳ <span class="countdown" data-date="2026-12-20"></span>
+                </p>
+              </div>
+              <div class="d-flex gap-2">
+                <button class="btn btn-outline-danger btn-sm w-50 wishlistBtn">
+                  ❤️ Wishlist
+                </button>
+                <button class="btn btn-primary btn-sm w-50 bookBtn">
+                  🎟 Book
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4 mb-4 event-card" data-location="Bandung">
+          <div class="card p-3 h-100">
+            <img
+              src="https://picsum.photos/400/250?random=3"
+              class="img-fluid rounded mb-3"
+            />
+            <div
+              class="card-body p-0 d-flex flex-column justify-content-between"
+            >
+              <div>
+                <h5 class="fw-bold">Music Festival 2026</h5>
+                <p class="mb-1">📍 Bandung</p>
+                <p class="text-success fw-semibold">💰 Mulai Rp 400.000</p>
+                <p class="mb-3">
+                  ⏳ <span class="countdown" data-date="2026-10-05"></span>
+                </p>
+              </div>
+              <div class="d-flex gap-2">
+                <button class="btn btn-outline-danger btn-sm w-50 wishlistBtn">
+                  ❤️ Wishlist
+                </button>
+                <button class="btn btn-primary btn-sm w-50 bookBtn">
+                  🎟 Book
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row p-0 m-0" id="eventContainer"></div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      let selectedEvent = "";
+
+      function renderEvents() {
+        let events = JSON.parse(localStorage.getItem("events")) || [];
+        $("#eventContainer").html("");
+        events.forEach((event, index) => {
+          $("#eventContainer").append(`
+            <div class="col-md-4 mb-4 event-card" data-location="${event.location}">
+              <div class="card p-3 h-100">
+                <img src="https://picsum.photos/400/250?random=${index + 10}" class="img-fluid rounded mb-3">
+                <h5 class="fw-bold">${event.name}</h5>
+                <p class="mb-1">📍 ${event.location}</p>
+                <p class="mb-1">📅 ${event.date}</p>
+                <p class="mb-1 text-success fw-semibold">💰 Mulai Rp 500.000</p>
+                <p class="mb-3">⏳ <span class="countdown" data-date="${event.date}"></span></p>
+                <div class="d-flex gap-2">
+                  <button class="btn btn-outline-danger btn-sm w-50 wishlistBtn"> ❤️ Wishlist </button>
+                  <button class="btn btn-primary btn-sm w-50 bookBtn"> 🎟 Book </button>
+                </div>
+              </div>
+            </div>
+          `);
+        });
+        startCountdown();
+      }
+
+      // Hitung Mundur Waktu Konser
+      function startCountdown() {
+        $(".countdown").each(function () {
+          let el = $(this);
+          let target = new Date(el.data("date")).getTime();
+          let timer = setInterval(function () {
+            let now = new Date().getTime();
+            let distance = target - now;
+            if (distance <= 0) {
+              el.text("EVENT STARTED 🔥");
+              clearInterval(timer);
+              return;
+            }
+            let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            let hours = Math.floor(
+              (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+            );
+            let minutes = Math.floor(
+              (distance % (1000 * 60 * 60)) / (1000 * 60),
+            );
+            let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            el.text(
+              days + "d " + hours + "h " + minutes + "m " + seconds + "s",
+            );
+          }, 1000);
+        });
+      }
+
+      // Klik Book Tiket
+      $(document).on("click", ".bookBtn", function () {
+        selectedEvent = $(this).closest(".card").find("h5").text();
+        $("#eventName").val(selectedEvent);
+        new bootstrap.Modal(document.getElementById("bookingModal")).show();
+      });
+
+      // Konfirmasi Pembelian di Modal
+      $("#confirmBook").click(function () {
+        let ticketType = $("#ticketType").val();
+        let ticketQty = $("#ticketQty").val();
+        let hargaSatuan = 500000;
+        if (ticketType === "VIP") hargaSatuan = 1500000;
+        if (ticketType === "Festival") hargaSatuan = 900000;
+
+        let ticket = {
+          event: selectedEvent,
+          type: ticketType,
+          qty: ticketQty,
+          hargaSatuan: hargaSatuan,
+          time: new Date().toLocaleString(),
+        };
+
+        localStorage.setItem("currentBooking", JSON.stringify(ticket));
+        localStorage.setItem("activeBooking", JSON.stringify(ticket));
+        window.location.href = "payment.html";
+      });
+
+      $(document).on("click", ".wishlistBtn", function () {
+        let eventName = $(this).closest(".card").find("h5").text();
+        let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+        if (!wishlist.includes(eventName)) {
+          wishlist.push(eventName);
+          localStorage.setItem("wishlist", JSON.stringify(wishlist));
+          alert(eventName + " ditambahkan ke Wishlist ❤️");
+        } else {
+          alert("Event sudah ada di Wishlist");
+        }
+      });
+
+      $("#search").on("keyup", function () {
+        let value = $(this).val().toLowerCase();
+        $(".event-card").filter(function () {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        });
+      });
+
+      $("#filterLocation").change(function () {
+        let location = $(this).val();
+        if (location === "") {
+          $(".event-card").show();
+        } else {
+          $(".event-card").hide();
+          $(`[data-location="${location}"]`).show();
+        }
+      });
+
+      renderEvents();
+    </script>
+  </body>
+</html>

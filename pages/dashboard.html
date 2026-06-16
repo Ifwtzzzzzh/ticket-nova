@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>My Dashboard - TicketNova</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        background: #0f172a;
+        color: white;
+      }
+
+      .card {
+        background: #1e293b;
+        border: none;
+        color: white;
+      }
+
+      .navbar {
+        background: #020617;
+      }
+
+      .qr-box {
+        background: white;
+        padding: 10px;
+        border-radius: 10px;
+        display: inline-block;
+        max-width: 120px;
+        width: 100%;
+        margin: 0 auto;
+      }
+
+      .qr-box canvas,
+      .qr-box img {
+        width: 100% !important;
+        height: auto !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- TOAST -->
+    <div class="toast-container position-fixed top-0 end-0 p-3">
+      <div id="liveToast" class="toast">
+        <div class="toast-header">
+          <strong class="me-auto"> 🎫 TicketNova </strong>
+
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="toast"
+          ></button>
+        </div>
+
+        <div class="toast-body">🎉 Selamat datang di Dashboard!</div>
+      </div>
+    </div>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container">
+        <a class="navbar-brand fw-bold"> 🎫 TicketNova </a>
+
+        <div class="ms-auto">
+          <a href="../index.html" class="btn btn-outline-light btn-sm">
+            Home
+          </a>
+          <a href="../pages/events.html" class="btn btn-outline-light btn-sm">
+            Events
+          </a>
+          <a href="../pages/wishlist.html" class="btn btn-outline-light btn-sm">
+            Wishlist
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- CONTENT -->
+    <div class="container py-4">
+      <h2 class="mb-4">👤 My Dashboard</h2>
+      <!-- STATS -->
+      <div class="row g-3 mb-4">
+        <div class="col-md-4">
+          <div class="alert alert-info">
+            🎟 Total Tiket :
+            <span id="totalTicket">0</span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="alert alert-warning">
+            ❤️ Wishlist :
+            <span id="wishCount">0</span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="alert alert-success">
+            🏆 Reward Point :
+            <span id="rewardPoint">0</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- BADGE -->
+      <div class="alert alert-primary">
+        🎖 Badge Member :
+        <strong id="badge">Bronze Fan</strong>
+      </div>
+
+      <!-- CALENDAR -->
+      <a
+        href="https://calendar.google.com/calendar/u/0/r/eventedit"
+        target="_blank"
+        class="btn btn-warning mb-4"
+      >
+        📅 Add To Google Calendar
+      </a>
+
+      <!-- REKOMENDASI -->
+      <div class="card p-3 mb-4">
+        <h4>🤖 Rekomendasi Untuk Anda</h4>
+        <ul>
+          <li>Coldplay Live Jakarta</li>
+          <li>Bruno Mars World Tour</li>
+          <li>Music Festival 2026</li>
+        </ul>
+      </div>
+
+      <!-- TICKETS -->
+      <h3 class="mb-3">🎫 My Tickets</h3>
+      <div class="row" id="ticketList"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+
+    <script>
+      function updateBadge() {
+        let point = parseInt(localStorage.getItem("points")) || 0;
+        $("#rewardPoint").text(point);
+        let badge = "Bronze Fan";
+        if (point >= 500) {
+          badge = "Silver Fan";
+        }
+        if (point >= 1000) {
+          badge = "Gold Fan";
+        }
+        if (point >= 2000) {
+          badge = "Platinum Fan";
+        }
+        $("#badge").text(badge);
+      }
+
+      function loadTickets() {
+        let tickets = JSON.parse(localStorage.getItem("tickets")) || [];
+        let wishlist = JSON.parse(localStorage.getItem("wishlist")) || [];
+        $("#totalTicket").text(tickets.length);
+        $("#wishCount").text(wishlist.length);
+        $("#ticketList").html("");
+        tickets.forEach((t, index) => {
+          $("#ticketList").append(`
+            <div class="col-md-4">
+            <div class="card p-3 mb-3">
+            <h5>${t.event}</h5>
+            <p>🎟 Type : ${t.type}</p>
+            <p>👥 Qty : ${t.qty}</p>
+            <p>🕒 Time : ${t.time || "-"}</p>
+            <div
+            class="qr-box my-2"
+            id="qr-${index}">
+            </div>
+            <button
+            class="btn btn-danger btn-sm mt-2"
+            onclick="deleteTicket(${index})">
+            Hapus Tiket
+            </button>
+            </div>
+            </div>
+            `);
+          new QRCode(document.getElementById(`qr-${index}`), {
+            text: `${t.event}-${t.type}-${t.qty}`,
+            width: 100,
+            height: 100,
+          });
+        });
+        updateBadge();
+      }
+
+      function deleteTicket(index) {
+        let tickets = JSON.parse(localStorage.getItem("tickets")) || [];
+        if (confirm("Yakin ingin menghapus tiket?")) {
+          tickets.splice(index, 1);
+          localStorage.setItem("tickets", JSON.stringify(tickets));
+          loadTickets();
+        }
+      }
+
+      $(document).ready(function () {
+        loadTickets();
+        const toastLive = document.getElementById("liveToast");
+        const toast = new bootstrap.Toast(toastLive);
+        toast.show();
+      });
+    </script>
+  </body>
+</html>
